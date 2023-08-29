@@ -12,12 +12,14 @@ export default {
       store
     }
   },
-  methods: {
-    findFlagUrlByIso2Code,
+  computed: {
     convertEnInUs() {
       for (let i = 0; i < store.foundMovies.length; i++) {
         if (store.foundMovies[i].original_language == "en") {
           store.foundMovies[i].original_language = "us"
+        }
+        if (store.foundMovies[i].original_language == "ja") {
+          store.foundMovies[i].original_language = "jp"
         }
       }
 
@@ -25,11 +27,16 @@ export default {
         if (store.foundSeries[i].original_language == "en") {
           store.foundSeries[i].original_language = "us"
         }
+
+        if (store.foundSeries[i].original_language == "ja") {
+          store.foundSeries[i].original_language = "jp"
+        }
       }
+      return 
     }
   },
-  updated() {
-    this.convertEnInUs()
+  methods: {
+    findFlagUrlByIso2Code
   }
 }
 </script>
@@ -48,7 +55,7 @@ export default {
                 <ul class="p-3">
                   <li class="mx-3">{{ movie.title }}</li>
                   <li class="mx-3">{{ movie.original_title }}</li>
-                  <li class="mx-3"><img :src="findFlagUrlByIso2Code(movie.original_language)" alt=""
+                  <li class="mx-3">{{ convertEnInUs }}<img :src="findFlagUrlByIso2Code(movie.original_language)" alt=""
                       style="width: 1.5rem;">
                   </li>
                   <li class="mx-3">{{ movie.vote_average }}</li>
