@@ -28,7 +28,7 @@ export default {
   </div>
 
   <div class="serie-info position-absolute opacity-0">
-    <ul class="p-3 list-unstyled bg-dark h-100 mb-3">
+    <ul class="p-3 list-unstyled bg-dark h-100 mb-3 overflow-auto">
       <li class="mx-3 text-white fs-5"><span class="fw-bold">Titolo: </span>{{ serie.title }}</li>
       <li class="mx-3 text-white fs-5"><span class="fw-bold">Titolo Originale: </span>{{ serie.original_title }}</li>
       <li class="mx-3 text-white fs-5"><span class="fw-bold">Lingua: </span><img
@@ -36,6 +36,8 @@ export default {
       </li>
       <li class="mx-3 text-white fs-5 "><span class="fw-bold">Voto: </span><i
           v-for="stars in formatRating(serie.vote_average)" class="fa-solid fa-star" style="color: #f5ed00;"></i></li>
+      <li class="mx-3 text-white"><span class="fw-bold">Descrizione: </span>{{ serie.overview }}</li>
+
     </ul>
   </div>
 </template>

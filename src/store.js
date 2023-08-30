@@ -17,6 +17,7 @@ export function searchMovie() {
   axios.get(url).then((response) => {
     store.foundMovies.push(...response.data.results)
     convertEnInUs()
+    console.log(store.foundMovies)
   })
 
   searchSeries()
@@ -28,6 +29,7 @@ export function searchSeries() {
   axios.get(url).then((response) => {
     store.foundSeries.push(...response.data.results)
     convertEnInUs()
+    console.log(store.foundSeries)
   })
 }
 

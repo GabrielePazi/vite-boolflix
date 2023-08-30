@@ -27,14 +27,16 @@ export default {
   </div>
 
   <div class="movie-info position-absolute opacity-0">
-    <ul class="p-3 list-unstyled bg-dark h-100 mb-3">
-      <li class="mx-3 text-white fs-5"><span class="fw-bold">Titolo: </span>{{ movie.title }}</li>
-      <li class="mx-3 text-white fs-5"><span class="fw-bold">Titolo Originale: </span>{{ movie.original_title }}</li>
-      <li class="mx-3 text-white fs-5"><span class="fw-bold">Lingua: </span><img
+    <ul class="p-3 list-unstyled bg-dark h-100 mb-3 overflow-auto">
+      <li class="mx-3 text-white"><span class="fw-bold">Titolo: </span>{{ movie.title }}</li>
+      <li class="mx-3 text-white"><span class="fw-bold">Titolo Originale: </span>{{ movie.original_title }}</li>
+      <li class="mx-3 text-white"><span class="fw-bold">Lingua: </span><img
           :src="findFlagUrlByIso2Code(movie.original_language)" alt="" style="width: 1.5rem;">
       </li>
-      <li class="mx-3 text-white fs-5 "><span class="fw-bold">Voto: </span><i
-          v-for="stars in formatRating(movie.vote_average)" class="fa-solid fa-star" style="color: #f5ed00;"></i></li>
+      <li class="mx-3 text-white "><span class="fw-bold">Voto: </span><i v-for="stars in formatRating(movie.vote_average)"
+          class="fa-solid fa-star" style="color: #f5ed00;"></i></li>
+      <li class="mx-3 text-white"><span class="fw-bold">Descrizione: </span>{{ movie.overview }}</li>
+
     </ul>
   </div>
 </template>
