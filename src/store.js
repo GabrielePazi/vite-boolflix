@@ -5,23 +5,18 @@ export const store = reactive({
   apiKey: "a0ff6243024fc680740f6a0afe993562",
   movieToSearch: "",
   foundMovies: [],
-  moviesPosters: [],
-  foundSeries: [],
-  seriesPosters: []
+  foundSeries: []
 })
 
 export function searchMovie() {
   store.foundMovies = []
-  store.moviesPosters = []
   store.foundSeries = []
-  store.seriesPosters = []
 
   const url = `https://api.themoviedb.org/3/search/movie?api_key=${store.apiKey}&query=${store.movieToSearch}&language=it-IT`
 
   axios.get(url).then((response) => {
     store.foundMovies.push(...response.data.results)
-    console.log(store.foundMovies)
-    searchMoviesPosters()
+    convertEnInUs()
   })
 
   searchSeries()
@@ -32,29 +27,39 @@ export function searchSeries() {
 
   axios.get(url).then((response) => {
     store.foundSeries.push(...response.data.results)
-    console.log(store.foundSeries)
-    searchSeriesPosters()
+    convertEnInUs()
   })
 }
 
-export function searchMoviesPosters() {
-  
+export function convertEnInUs() {
   for (let i = 0; i < store.foundMovies.length; i++) {
-    let imgUrl = `https://image.tmdb.org/t/p/w154${store.foundMovies[i].poster_path}`
-
-    axios.get(imgUrl).then((response) => {
-      store.moviesPosters.push(response.config.url)
-    })
+    if (store.foundMovies[i].original_language == "en") {
+      store.foundMovies[i].original_language = "us"
+    }
+    if (store.foundMovies[i].original_language == "ja") {
+      store.foundMovies[i].original_language = "jp"
+    }
   }
+
+  for (let i = 0; i < store.foundSeries.length; i++) {
+    if (store.foundSeries[i].original_language == "en") {
+      store.foundSeries[i].original_language = "us"
+    }
+
+    if (store.foundSeries[i].original_language == "ja") {
+      store.foundSeries[i].original_language = "jp"
+    }
+  }
+  return
 }
 
-export function searchSeriesPosters() {
-  
-  for (let i = 0; i < store.foundMovies.length; i++) {
-    let imgUrl = `https://image.tmdb.org/t/p/w154${store.foundSeries[i].poster_path}`
-
-    axios.get(imgUrl).then((response) => {
-      store.seriesPosters.push(response.config.url)
-    })
+export function getImage(movie) {
+  if (movie.poster_path) {
+    return `https://image.tmdb.org/t/p/w300${movie.poster_path}`
   }
+  return false
+}
+
+export function formatRating(avgRating) {
+  return Math.ceil(avgRating / 2)
 }
